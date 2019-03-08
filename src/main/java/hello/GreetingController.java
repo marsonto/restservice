@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GreetingController {
 
-	private static final String template = "Hello, %s!";
+	private static final String TEMPLATE = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
 	private final CapitalService service;
-	
+
 	@Autowired
 	public GreetingController(final CapitalService service) {
 		this.service = service;
@@ -23,7 +23,7 @@ public class GreetingController {
 	@RequestMapping("/greeting")
 	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) throws NoLetterException {
 		if(name.matches("[a-zA-Z]+")) {
-			return new Greeting(counter.incrementAndGet(), String.format(template, service.uppercase(name)));
+			return new Greeting(counter.incrementAndGet(), String.format(TEMPLATE, service.uppercase(name)));
 		}
 		else {throw new NoLetterException();}
 	}
@@ -31,7 +31,7 @@ public class GreetingController {
 	@RequestMapping("/greeting/{name}")
 	public Greeting pathGreeting(@PathVariable("name") String name) throws NoLetterException {
 		if(name.matches("[a-zA-Z]+")) {
-			return new Greeting(counter.incrementAndGet(), String.format(template, service.uppercase(name)));
+			return new Greeting(counter.incrementAndGet(), String.format(TEMPLATE, service.uppercase(name)));
 		}
 		else {throw new NoLetterException(); }
 	}
