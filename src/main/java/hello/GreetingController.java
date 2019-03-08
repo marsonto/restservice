@@ -14,15 +14,18 @@ public class GreetingController {
 	private static final String TEMPLATE = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
 	private final CapitalService service;
+	private final databaseConnector connector;
 
 	@Autowired
-	public GreetingController(final CapitalService service) {
+	public GreetingController(final CapitalService service, final databaseConnector connector) {
 		this.service = service;
+		this.connector = connector;
 	}
 
 	@RequestMapping("/greeting")
 	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) throws NoLetterException {
 		if(name.matches("[a-zA-Z]+")) {
+			connector.connectToData();
 			return new Greeting(counter.incrementAndGet(), String.format(TEMPLATE, service.uppercase(name)));
 		}
 		else {throw new NoLetterException();}
