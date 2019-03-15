@@ -1,5 +1,6 @@
 package hello;
 
+import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,7 +38,12 @@ public class GreetingController {
 		}
 		else {throw new NoLetterException(); }
 	}
-	
+
+	@RequestMapping("/greeting/drink/{id}")
+	public drink showDrink(@PathVariable("id") int id) throws SQLException{
+		return dao.accessDrink(id);
+	}
+
 	@ExceptionHandler(NoLetterException.class)
 	public String handle() {
 		return "Numbers and special characters are not allowed!";
