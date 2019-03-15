@@ -1,11 +1,11 @@
 package hello;
 
-public class drink {
+public class Drink {
     private final int id;
     private final String name;
     private final double price;
 
-    public drink(final int id, final String name, final double price) {
+    public Drink(final int id, final String name, final double price) {
         this.id = id;
         this.name = name;
         this.price = price;

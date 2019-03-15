@@ -1,6 +1,7 @@
 package hello;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,9 +40,15 @@ public class GreetingController {
 		else {throw new NoLetterException(); }
 	}
 
+	//catch out of bounds and no int
 	@RequestMapping("/greeting/drink/{id}")
-	public drink showDrink(@PathVariable("id") int id) throws SQLException{
+	public Drink showDrink(@PathVariable("id") int id) throws SQLException{
 		return dao.accessDrink(id);
+	}
+
+	@RequestMapping("/greeting/drink/all")
+	public List<Drink> showAllDrink() throws SQLException{
+		return dao.accessAllDrinks();
 	}
 
 	@ExceptionHandler(NoLetterException.class)
