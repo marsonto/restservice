@@ -2,6 +2,7 @@ package hello;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -42,12 +43,12 @@ public class GreetingController {
 
 	//catch out of bounds and no int
 	@RequestMapping("/greeting/drink/{id}")
-	public Drink showDrink(@PathVariable("id") int id) throws SQLException{
+	public Optional<Drink> showDrink(@PathVariable("id") int id){
 		return dao.accessDrink(id);
 	}
 
 	@RequestMapping("/greeting/drink/all")
-	public List<Drink> showAllDrink() throws SQLException{
+	public List<Drink> showAllDrink(){
 		return dao.accessAllDrinks();
 	}
 
