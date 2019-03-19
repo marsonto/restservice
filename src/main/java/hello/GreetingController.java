@@ -16,11 +16,13 @@ public class GreetingController {
 	private static final String TEMPLATE = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
 	private final CapitalService service;
+	private final DrinkRepository repository;
 
 
 	@Autowired
-	public GreetingController(final CapitalService service) {
+	public GreetingController(final CapitalService service,final DrinkRepository repository) {
 		this.service = service;
+		this.repository = repository;
 	}
 
 	@RequestMapping("/greeting")
@@ -38,18 +40,18 @@ public class GreetingController {
 		}
 		else {throw new NoLetterException(); }
 	}
-	/*
+
 	@RequestMapping("/greeting/drink/{id}")
 	public Optional<Drink> showDrink(@PathVariable("id") int id){
-		return dao.accessDrink(id);
+		return repository.findById(id);
 	}
 
 
 	@RequestMapping("/greeting/drink/all")
-	public List<Drink> showAllDrink(){
-		return dao.accessAllDrinks();
+	public Iterable<Drink> showAllDrink(){
+		return repository.findAll();
 	}
-	*/
+
 
 	@ExceptionHandler(NoLetterException.class)
 	public String handle() {
