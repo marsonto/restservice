@@ -16,12 +16,11 @@ public class GreetingController {
 	private static final String TEMPLATE = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
 	private final CapitalService service;
-	private final DataAccessObjectService dao;
+
 
 	@Autowired
-	public GreetingController(final CapitalService service, final DataAccessObjectService dao) {
+	public GreetingController(final CapitalService service) {
 		this.service = service;
-		this.dao = dao;
 	}
 
 	@RequestMapping("/greeting")
@@ -39,17 +38,18 @@ public class GreetingController {
 		}
 		else {throw new NoLetterException(); }
 	}
-
-	//catch out of bounds and no int
+	/*
 	@RequestMapping("/greeting/drink/{id}")
 	public Optional<Drink> showDrink(@PathVariable("id") int id){
 		return dao.accessDrink(id);
 	}
 
+
 	@RequestMapping("/greeting/drink/all")
 	public List<Drink> showAllDrink(){
 		return dao.accessAllDrinks();
 	}
+	*/
 
 	@ExceptionHandler(NoLetterException.class)
 	public String handle() {
