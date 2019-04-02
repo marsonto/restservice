@@ -1,14 +1,9 @@
 package hello;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class GreetingController {
@@ -32,6 +27,12 @@ public class GreetingController {
 		}
 		else {throw new NoLetterException();}
 	}
+
+	@PostMapping("/drink/create")
+	public String createDrink(@RequestBody Drink drink) {
+		repository.save(drink);
+		return "Drink was saved!";
+	}
 	
 	@RequestMapping("/greeting/{name}")
 	public Greeting pathGreeting(@PathVariable("name") String name) throws NoLetterException {
@@ -41,13 +42,13 @@ public class GreetingController {
 		else {throw new NoLetterException(); }
 	}
 
-	@RequestMapping("/greeting/drink/{id}")
+	@RequestMapping("/drink/{id}")
 	public Optional<Drink> showDrink(@PathVariable("id") int id){
 		return repository.findById(id);
 	}
 
 
-	@RequestMapping("/greeting/drink/all")
+	@RequestMapping("/drink/all")
 	public Iterable<Drink> showAllDrink(){
 		return repository.findAll();
 	}
